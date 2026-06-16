@@ -13,8 +13,10 @@ Here is what it means in plain English:
 
 ## Workspace
 
-To set up the workspace make a folder called 'data_experiment' and set up the following files
+To set up the workspace make a folder called 'data_experiment' and set up the following files - 
+
 . pipelines.py - this is our python file, it is where we write our code
+
 . movies.csv - this is our messy data
 
 Kindly check each file for the content
