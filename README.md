@@ -15,8 +15,8 @@ Here is what it means in plain English:
 
 To set up the workspace make a folder called 'data_experiment' and set up the following files - 
 
-. pipelines.py - this is our python file, it is where we write our code
+• pipelines.py - this is our python file, it is where we write our code
 
-. movies.csv - this is our messy data
+• movies.csv - this is our messy data
 
 Kindly check each file for the content
