@@ -91,12 +91,20 @@ for movie in clean_movies:
         INSERT INTO clean_movies (title, year, rating)
         VALUES (?, ?, ?)
     ''', (movie['name'], movie['year'], movie['rating']))
-    print(f"Loaded into DB: {movie['name']}")
+    print(f"Loaded into DB (Clean): {movie['name']}")
+
+# NEW: Loop through the quarantine list and save the bad data for inspection
+for bad_movie in quarantine_movies:
+    cursor.execute('''
+        INSERT INTO quarantined_movies (title, raw_year, raw_rating)
+        VALUES (?, ?, ?)
+    ''', (bad_movie['movie_name'], bad_movie['release_year'], bad_movie['rating']))
+    print(f"Loaded into DB (Quarantine): {bad_movie['movie_name']}")
 
 # 4. Commit changes and close the connection
 connection.commit()
 connection.close()
 
-print("\n🎉 PIPELINE COMPLETE: Clean data locked in 'movies.db' using decoupled SQL!\n")
+print("\n🎉 PIPELINE COMPLETE: Clean data and Quarantined data safely logged in 'movies.db'!\n")
 
 #Fun Fact : The clear command comes in clutch if your terminal looks like a battle field

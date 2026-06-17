@@ -19,3 +19,12 @@ To see the database, I recommend installing TablePlus
 Now try connecting to movies.db in TablePlus
 If you see a sqlite_sequence table, don't worry about that, it was auto create and is IMPORTANT
 */
+
+-- Table for corrupted data (Relaxed schema to avoid crashes)
+CREATE TABLE IF NOT EXISTS quarantined_movies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    raw_year TEXT,
+    raw_rating TEXT,
+    error_reason TEXT
+);
