@@ -1,5 +1,6 @@
 #Import modules
 import csv
+import sqlite3 #Built-in SQL database tool
 
 #Phase:1 Extract Data from the messy file 'movies.csv'
 
@@ -63,3 +64,39 @@ for row in raw_movies:
 print(f"\nTransformation complete!")
 print(f"Clean rows ready for database: {len(clean_movies)}")
 print(f"Rows isolated in quarantine: {len(quarantine_movies)}\n")
+
+#Run the file again
+
+#Phase:3 Loading the data (Load)
+
+print("\nLoading Data ...\n")
+
+connection = sqlite3.connect('movies.db') #Make a database and connect to it
+
+cursor = connection.cursor() #We need an object to execute SQL commands, just like we need a cursor on our device to control it
+
+#Although we can write SQL in this file, it will be so messy and not a good practise
+#So make a new file schema.sql in the same folder
+
+with open('schema.sql', mode='r') as sql_file:
+    sql_script = sql_file.read()
+
+# Execute the SQL code directly from the file
+cursor.executescript(sql_script)
+print("✅ Database table initialized using schema.sql.")
+
+# 3. Loop through our clean list and inject the rows into the database
+for movie in clean_movies:
+    cursor.execute('''
+        INSERT INTO clean_movies (title, year, rating)
+        VALUES (?, ?, ?)
+    ''', (movie['name'], movie['year'], movie['rating']))
+    print(f"Loaded into DB: {movie['name']}")
+
+# 4. Commit changes and close the connection
+connection.commit()
+connection.close()
+
+print("\n🎉 PIPELINE COMPLETE: Clean data locked in 'movies.db' using decoupled SQL!\n")
+
+#Fun Fact : The clear command comes in clutch if your terminal looks like a battle field
